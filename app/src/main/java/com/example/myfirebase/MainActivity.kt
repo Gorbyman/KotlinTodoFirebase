@@ -49,16 +49,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, AddTaskFragment()).commit()
         }
 
-        // var addTaskFragment = AddTaskFragment()
-        //Log.i("johandebug", addTaskFragment.toString())
-        /* addTaskFragment.addTaskBtn.setOnClickListener {
-            var thingtodo = Todothing(taskTitle = addTaskFragment.taskTitleTextInput.text.toString(), taskCategory = addTaskFragment.taskCategoryTextInput.text.toString(), taskDoneTime = addTaskFragment.taskDoneTimeTextInput.text.toString(), taskRepeat = addTaskFragment.taskRepeatCheckBox.isChecked(), taskRepeatInterval = addTaskFragment.taskRepeatIntervalTextInput.text.toString(), taskPoints = addTaskFragment.taskPointsTextInput.text.toString(), done = false)
-            todoadapter.database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
-            taskTitleTextInput.setText("")
-            todoadapter.loadTodo()
-        }
-
-         */
 
         logoutBtn.setOnClickListener {
             auth.signOut()

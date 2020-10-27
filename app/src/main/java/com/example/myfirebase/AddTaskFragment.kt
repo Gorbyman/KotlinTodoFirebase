@@ -16,19 +16,19 @@ class AddTaskFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_task, container, false)
-        addTaskBtn.setOnClickListener {
-            /*var thingtodo = Todothing(taskTitle = taskTitleTextInput.text.toString(), taskCategory = addTaskFragment.taskCategoryTextInput.text.toString(), taskDoneTime = addTaskFragment.taskDoneTimeTextInput.text.toString(), taskRepeat = addTaskFragment.taskRepeatCheckBox.isChecked(), taskRepeatInterval = addTaskFragment.taskRepeatIntervalTextInput.text.toString(), taskPoints = addTaskFragment.taskPointsTextInput.text.toString(), done = false)
-            todoadapter.database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
-            taskTitleTextInput.setText("")
-            todoadapter.loadTodo()
-            */
-            Log.i("johandebug", "klickat")
-        }
     }
 
 
 override fun onStart() {
     super.onStart()
+    addTaskBtn.setOnClickListener {
+        /*var thingtodo = Todothing(taskTitle = taskTitleTextInput.text.toString(), taskCategory = addTaskFragment.taskCategoryTextInput.text.toString(), taskDoneTime = addTaskFragment.taskDoneTimeTextInput.text.toString(), taskRepeat = addTaskFragment.taskRepeatCheckBox.isChecked(), taskRepeatInterval = addTaskFragment.taskRepeatIntervalTextInput.text.toString(), taskPoints = addTaskFragment.taskPointsTextInput.text.toString(), done = false)
+        todoadapter.database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
+        taskTitleTextInput.setText("")
+        todoadapter.loadTodo()
+        */
+        Log.i("johandebug", "klickat")
+    }
 }
 
 
