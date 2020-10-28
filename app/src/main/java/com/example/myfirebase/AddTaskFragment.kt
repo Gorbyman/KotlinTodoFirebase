@@ -41,6 +41,10 @@ override fun onStart() {
         todoAdapter.loadTodo()
         // Log.i("johandebug", thingtodo.toString())
     }
+
+    doneBtn.setOnClickListener {
+        (activity as MainActivity).goListFragment()
+    }
 }
 
 

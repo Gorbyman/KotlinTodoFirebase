@@ -68,10 +68,10 @@ class MainActivity : AppCompatActivity() {
             Log.i("johandebug", "User id is " + auth.currentUser!!.uid)
             todoadapter.loadTodo()
         }
-
-
-
     }
 
+    fun goListFragment(){
+        supportFragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, ListFragment()).commit()
+    }
 
 }

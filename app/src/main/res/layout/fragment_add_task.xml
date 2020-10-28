@@ -100,8 +100,9 @@
         android:id="@+id/doneBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:text="DONE"
         app:layout_constraintEnd_toStartOf="@+id/addTaskBtn"
-        tools:layout_editor_absoluteY="252dp" />
+        app:layout_constraintTop_toBottomOf="@+id/taskRepeatIntervalTextInput" />
 </androidx.constraintlayout.widget.ConstraintLayout>
