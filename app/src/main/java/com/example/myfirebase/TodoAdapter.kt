@@ -5,20 +5,25 @@
     import android.view.LayoutInflater
     import android.view.View
     import android.view.ViewGroup
+    import androidx.lifecycle.MutableLiveData
     import androidx.recyclerview.widget.RecyclerView
     import com.google.firebase.auth.FirebaseAuth
+    import com.google.firebase.auth.ktx.auth
     import com.google.firebase.database.DataSnapshot
     import com.google.firebase.database.DatabaseError
     import com.google.firebase.database.DatabaseReference
     import com.google.firebase.database.ValueEventListener
+    import com.google.firebase.database.ktx.database
     import com.google.firebase.database.ktx.getValue
+    import com.google.firebase.ktx.Firebase
     import kotlinx.android.synthetic.main.todo_item.view.*
 
     class TodoAdapter() : RecyclerView.Adapter<TodoViewHolder>() {
 
-        lateinit var database : DatabaseReference
-        lateinit var auth: FirebaseAuth
+        var database: DatabaseReference = Firebase.database.reference
+        var auth: FirebaseAuth = Firebase.auth
 
+        // orginalkod
         var todolist = mutableListOf<Todothing>()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
@@ -60,14 +65,17 @@
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // Get Post object and use the values to update the UI
 
+                    var tempTodoList = mutableListOf<Todothing>()
                     for (todochild : DataSnapshot in dataSnapshot.children){
                         val todo : Todothing? = todochild.getValue<Todothing>()
                         todo!!.fbkey = todochild.key
-                        Log.i("mindebug" , todo!!.taskTitle!!)
-                        todolist.add(todo!!)
+                        // Log.i("mindebug" , todo!!.taskTitle!!)
+                        tempTodoList.add(todo!!)
                     }
 
                     notifyDataSetChanged()
+                    todolist = tempTodoList
+                    Log.w("johandebug", todolist.toString())
 
                 }
 
