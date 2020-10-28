@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginRegisterActivity::class.java)
               startActivity(intent)
         } else {
+            Log.i("johandebug", "User id is " + auth.currentUser!!.uid)
             todoadapter.loadTodo()
         }
 
