@@ -37,6 +37,7 @@
 
         override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
             holder.todoText.text = todolist[position].taskTitle
+            holder.todoText.text = todolist[position].taskPoints
 
             if(todolist[position].done == true ){
                 holder.todoDone.setBackgroundColor(Color.GREEN)
@@ -72,9 +73,9 @@
                         // Log.i("mindebug" , todo!!.taskTitle!!)
                         tempTodoList.add(todo!!)
                     }
-
-                    notifyDataSetChanged()
                     todolist = tempTodoList
+                    notifyDataSetChanged()
+                    Log.w("johandebug", "antal på listan " + todolist.size.toString())
                     Log.w("johandebug", todolist.toString())
 
                 }
@@ -95,6 +96,7 @@
     class TodoViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
         var todoText = view.todoTV
+        var todoPoints = view.pointsTV
         var todoDone = view.todoDoneCL
 
     }

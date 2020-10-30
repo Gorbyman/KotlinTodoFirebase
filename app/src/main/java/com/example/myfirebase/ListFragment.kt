@@ -14,10 +14,9 @@ class ListFragment : Fragment() {
     var todoAdapter = TodoAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         Log.w("johandebug", todoAdapter.todolist.toString())
-        taskRecView.layoutManager = LinearLayoutManager(context)
-        taskRecView.adapter = todoAdapter
     }
 
     override fun onCreateView(
@@ -27,6 +26,13 @@ class ListFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list, container, false)
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        taskRecView.layoutManager = LinearLayoutManager(context)
+        taskRecView.adapter = todoAdapter
+        todoAdapter.loadTodo()
     }
 
 
