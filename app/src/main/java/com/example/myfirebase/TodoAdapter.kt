@@ -37,7 +37,7 @@
 
         override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
             holder.todoText.text = todolist[position].taskTitle
-            holder.todoText.text = todolist[position].taskPoints
+            holder.todoPoints.text = todolist[position].taskPoints
 
             if(todolist[position].done == true ){
                 holder.todoDone.setBackgroundColor(Color.GREEN)
