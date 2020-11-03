@@ -37,7 +37,16 @@ override fun onStart() {
     addTaskBtn.setOnClickListener {
         var thingtodo = Todothing(taskTitle = taskTitleTextInput.text.toString(), taskCategory = taskCategoryTextInput.text.toString(), taskDoneTime = taskDoneTimeTextInput.text.toString(), taskRepeat = taskRepeatCheckBox.isChecked(), taskRepeatInterval = taskRepeatIntervalTextInput.text.toString(), taskPoints = taskPointsTextInput.text.toString(), done = false)
         database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
+
+
         taskTitleTextInput.setText("")
+        taskCategoryTextInput.setText("")
+        taskDoneTimeTextInput.setText("")
+        taskPointsTextInput.setText("")
+        taskRepeatIntervalTextInput.setText("")
+        if (taskRepeatCheckBox.isChecked()) {
+            taskRepeatCheckBox.setChecked(false);
+        }
         todoAdapter.loadTodo()
         // Log.i("johandebug", thingtodo.toString())
     }

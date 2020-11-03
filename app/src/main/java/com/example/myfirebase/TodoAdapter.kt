@@ -87,7 +87,8 @@
                 }
             }
 
-            database.child("todousers").child(auth.currentUser!!.uid).orderByChild("done").addListenerForSingleValueEvent(todoListener)
+
+            // database.child("todousers").child(auth.currentUser!!.uid).orderByChild("done").addListenerForSingleValueEvent(todoListener)
 
         }
 
