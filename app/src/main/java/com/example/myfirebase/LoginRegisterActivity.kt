@@ -23,8 +23,11 @@ class LoginRegisterActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         loginRegisterBtn.setOnClickListener {
-            if(loginEmailET.text.toString()=="" || loginPasswordET.text.toString()==""){
-                Log.w("johandebug", "tomma fält i register")
+            val emailInput: String = loginEmailET.text.toString()
+            val passwordInput: String = loginEmailET.text.toString()
+            if (emailInput.trim().length == 0 || passwordInput.trim().length == 0) {
+                Toast.makeText(applicationContext, "Please enter an email and password ", Toast.LENGTH_SHORT)
+                    .show()
                 finish()
             } else {
                 auth.createUserWithEmailAndPassword(
@@ -54,8 +57,12 @@ class LoginRegisterActivity : AppCompatActivity() {
         }
 
         loginLoginBtn.setOnClickListener {
-            if (loginEmailET.text.toString() == "" || loginPasswordET.text.toString() == "") {
-                Log.w("johandebug", "tomma fält i register")
+
+            val emailInput: String = loginEmailET.text.toString()
+            val passwordInput: String = loginEmailET.text.toString()
+            if (emailInput.trim().length == 0 || passwordInput.trim().length == 0) {
+                Toast.makeText(applicationContext, "Please enter an email and password ", Toast.LENGTH_SHORT)
+                    .show()
                 finish()
             } else {
                 auth.signInWithEmailAndPassword(
@@ -76,8 +83,6 @@ class LoginRegisterActivity : AppCompatActivity() {
                             ).show()
 
                         }
-
-                        // ...
                     }
             }
         }
