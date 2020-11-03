@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_login_register.*
 import kotlinx.android.synthetic.main.fragment_add_task.*
 
 class AddTaskFragment : Fragment() {
@@ -27,7 +29,6 @@ class AddTaskFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add_task, container, false)
     }
 
-
 override fun onStart() {
     super.onStart()
 
@@ -35,6 +36,23 @@ override fun onStart() {
     auth = Firebase.auth
 
     addTaskBtn.setOnClickListener {
+
+        var validateEmptyTextinput = false
+
+        taskTitleTextInput.text.isEmpty().apply {
+            validateEmptyTextinput = true
+            Log.w("johandebug", validateEmptyTextinput.toString())
+        }
+        taskCategoryTextInput.text.isEmpty().apply {
+            validateEmptyTextinput = true
+            Log.w("johandebug", validateEmptyTextinput.toString())
+        }
+        taskDoneTimeTextInput.text.isEmpty().apply {
+            validateEmptyTextinput = true
+            Log.w("johandebug", validateEmptyTextinput.toString())
+        }
+
+
         var thingtodo = Todothing(taskTitle = taskTitleTextInput.text.toString(), taskCategory = taskCategoryTextInput.text.toString(), taskDoneTime = taskDoneTimeTextInput.text.toString(), taskRepeat = taskRepeatCheckBox.isChecked(), taskRepeatInterval = taskRepeatIntervalTextInput.text.toString(), taskPoints = taskPointsTextInput.text.toString(), done = false)
         database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
 

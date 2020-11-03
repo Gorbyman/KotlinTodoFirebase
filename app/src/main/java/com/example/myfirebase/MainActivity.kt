@@ -17,13 +17,13 @@ import kotlinx.android.synthetic.main.fragment_add_task.*
 @IgnoreExtraProperties
 data class Todothing(
     var fbkey: String? = null,
-    var taskTitle: String? = "",
-    var taskCategory: String? = "",
-    var taskDoneTime: String? = "",
+    var taskTitle: String,
+    var taskCategory: String,
+    var taskDoneTime: String,
     var taskRepeat: Boolean? = false,
-    var taskRepeatInterval: String? = "",
+    var taskRepeatInterval: String = "",
     var taskPoints: String? = "",
-    var done: Boolean? = false
+    var done: Boolean = false
 )
 
 class MainActivity : AppCompatActivity() {
