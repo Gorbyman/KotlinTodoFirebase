@@ -42,7 +42,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Done by (format: YYYY-MM-DD)"
+        android:hint="Done by (format: YYMMDD)"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,23 +68,23 @@
         android:ems="10"
         android:hint="Repeat interval in days"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/taskPointsTextInput"
         app:layout_constraintStart_toEndOf="@+id/taskRepeatCheckBox"
         app:layout_constraintTop_toBottomOf="@+id/taskDoneTimeTextInput" />
 
     <EditText
         android:id="@+id/taskPointsTextInput"
-        android:layout_width="60dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="Points (optional)"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskRepeatIntervalTextInput" />
+        app:layout_constraintStart_toEndOf="@+id/taskRepeatIntervalTextInput"
+        app:layout_constraintTop_toBottomOf="@+id/taskDoneTimeTextInput" />
 
     <Button
         android:id="@+id/addTaskBtn"
@@ -100,9 +100,9 @@
         android:id="@+id/doneBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
         android:text="DONE"
-        app:layout_constraintEnd_toStartOf="@+id/addTaskBtn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskRepeatIntervalTextInput" />
 </androidx.constraintlayout.widget.ConstraintLayout>
