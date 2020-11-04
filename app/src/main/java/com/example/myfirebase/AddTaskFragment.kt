@@ -55,6 +55,16 @@ override fun onStart() {
             Log.w("johandebug", "taskdonetime $validateEmptyTextinput")
             Toast.makeText(activity, "Please enter a done by time", Toast.LENGTH_SHORT).show()
         }
+        if(taskDoneTimeTextInput.text.trim().isEmpty()) {
+            validateEmptyTextinput = true
+            Log.w("johandebug", "taskdonetime $validateEmptyTextinput")
+            Toast.makeText(activity, "Please enter a done by time", Toast.LENGTH_SHORT).show()
+        }
+        if(taskDoneTimeTextInput.text.toString().length !== 6) {
+            validateEmptyTextinput = true
+            Log.w("johandebug", "taskdonetime $validateEmptyTextinput")
+            Toast.makeText(activity, "Enter date in YYMMDD", Toast.LENGTH_SHORT).show()
+        }
 
         if(validateEmptyTextinput){
             mainActivity.finish()
