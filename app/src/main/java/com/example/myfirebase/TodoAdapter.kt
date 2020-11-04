@@ -58,9 +58,7 @@
         }
 
         fun loadTodo(){
-
             todolist.clear()
-
 
             val todoListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -70,7 +68,7 @@
                     for (todochild : DataSnapshot in dataSnapshot.children){
                         val todo : Todothing? = todochild.getValue<Todothing>()
                         todo!!.fbkey = todochild.key
-                        // Log.i("mindebug" , todo!!.taskTitle!!)
+                        //Log.i("mindebug" , todo!!.taskTitle!!)
                         tempTodoList.add(todo!!)
                     }
                     todolist = tempTodoList
@@ -86,9 +84,7 @@
                     // ...
                 }
             }
-
-
-            // database.child("todousers").child(auth.currentUser!!.uid).orderByChild("done").addListenerForSingleValueEvent(todoListener)
+                database.child("todousers").child(auth.currentUser!!.uid).orderByChild("done").addListenerForSingleValueEvent(todoListener)
 
         }
 

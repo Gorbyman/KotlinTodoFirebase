@@ -88,6 +88,7 @@ override fun onStart() {
             if (taskRepeatCheckBox.isChecked()) {
                 taskRepeatCheckBox.setChecked(false);
             }
+            Log.w("johandebug", "i addtaskfrag " + todoAdapter.todolist.size.toString())
             todoAdapter.loadTodo()
         }
     }
