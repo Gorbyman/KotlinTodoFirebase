@@ -21,7 +21,7 @@ data class Todothing(
     var taskCategory: String,
     var taskDoneTime: String,
     var taskRepeat: Boolean? = false,
-    var taskRepeatInterval: String = "",
+    var taskRepeatInterval: String? = "",
     var taskPoints: String? = "",
     var done: Boolean = false
 )

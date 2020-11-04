@@ -20,6 +20,7 @@ class AddTaskFragment : Fragment() {
     lateinit var database : DatabaseReference
     lateinit var auth: FirebaseAuth
     var todoAdapter = TodoAdapter()
+    val mainActivity = MainActivity()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,34 +40,46 @@ override fun onStart() {
 
         var validateEmptyTextinput = false
 
-        taskTitleTextInput.text.isEmpty().apply {
+        if(taskTitleTextInput.text.trim().isEmpty()) {
             validateEmptyTextinput = true
-            Log.w("johandebug", validateEmptyTextinput.toString())
+            Log.w("johandebug", "tasktitle $validateEmptyTextinput")
+            Toast.makeText(activity, "Please enter a title", Toast.LENGTH_SHORT).show()
         }
-        taskCategoryTextInput.text.isEmpty().apply {
+        if(taskCategoryTextInput.text.trim().isEmpty()) {
             validateEmptyTextinput = true
-            Log.w("johandebug", validateEmptyTextinput.toString())
+            Log.w("johandebug", "taskcategory $validateEmptyTextinput")
+            Toast.makeText(activity, "Please enter a category", Toast.LENGTH_SHORT).show()
         }
-        taskDoneTimeTextInput.text.isEmpty().apply {
+        if(taskDoneTimeTextInput.text.trim().isEmpty()) {
             validateEmptyTextinput = true
-            Log.w("johandebug", validateEmptyTextinput.toString())
+            Log.w("johandebug", "taskdonetime $validateEmptyTextinput")
+            Toast.makeText(activity, "Please enter a done by time", Toast.LENGTH_SHORT).show()
         }
 
+        if(validateEmptyTextinput){
+            mainActivity.finish()
+        } else {
+            var thingtodo = Todothing(
+                taskTitle = taskTitleTextInput.text.toString(),
+                taskCategory = taskCategoryTextInput.text.toString(),
+                taskDoneTime = taskDoneTimeTextInput.text.toString(),
+                taskRepeat = taskRepeatCheckBox.isChecked(),
+                taskRepeatInterval = taskRepeatIntervalTextInput.text.toString(),
+                taskPoints = taskPointsTextInput.text.toString(),
+                done = false
+            )
+            database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
 
-        var thingtodo = Todothing(taskTitle = taskTitleTextInput.text.toString(), taskCategory = taskCategoryTextInput.text.toString(), taskDoneTime = taskDoneTimeTextInput.text.toString(), taskRepeat = taskRepeatCheckBox.isChecked(), taskRepeatInterval = taskRepeatIntervalTextInput.text.toString(), taskPoints = taskPointsTextInput.text.toString(), done = false)
-        database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
-
-
-        taskTitleTextInput.setText("")
-        taskCategoryTextInput.setText("")
-        taskDoneTimeTextInput.setText("")
-        taskPointsTextInput.setText("")
-        taskRepeatIntervalTextInput.setText("")
-        if (taskRepeatCheckBox.isChecked()) {
-            taskRepeatCheckBox.setChecked(false);
+            taskTitleTextInput.setText("")
+            taskCategoryTextInput.setText("")
+            taskDoneTimeTextInput.setText("")
+            taskPointsTextInput.setText("")
+            taskRepeatIntervalTextInput.setText("")
+            if (taskRepeatCheckBox.isChecked()) {
+                taskRepeatCheckBox.setChecked(false);
+            }
+            todoAdapter.loadTodo()
         }
-        todoAdapter.loadTodo()
-        // Log.i("johandebug", thingtodo.toString())
     }
 
     doneBtn.setOnClickListener {
