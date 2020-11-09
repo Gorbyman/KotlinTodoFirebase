@@ -42,11 +42,6 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction().add(R.id.mainFragmentHolder, ListFragment()).commit()
 
-        toAddTaskBtn.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, AddTaskFragment()).commit()
-        }
-
-
         logoutBtn.setOnClickListener {
             auth.signOut()
             val intent = Intent(this, LoginRegisterActivity::class.java)

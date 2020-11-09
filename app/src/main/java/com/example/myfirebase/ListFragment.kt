@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : Fragment() {
@@ -35,5 +36,11 @@ class ListFragment : Fragment() {
         todoAdapter.loadTodo()
     }
 
+    override fun onStart() {
+        super.onStart()
+        toAddTaskBtn.setOnClickListener {
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, AddTaskFragment()).commit()
+        }
+    }
 
 }
