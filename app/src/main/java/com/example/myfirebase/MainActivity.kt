@@ -36,9 +36,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //todoRecview.layoutManager = LinearLayoutManager(this)
-        // todoRecview.adapter = todoadapter
-
         todoadapter.database = Firebase.database.reference
         todoadapter.auth = Firebase.auth
         auth = Firebase.auth
@@ -65,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginRegisterActivity::class.java)
               startActivity(intent)
         } else {
-            Log.i("johandebug", "User id is " + auth.currentUser!!.uid)
             todoadapter.loadTodo()
         }
     }
