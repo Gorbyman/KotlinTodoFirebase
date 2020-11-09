@@ -49,16 +49,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskCategoryTextInput" />
 
-    <CheckBox
-        android:id="@+id/taskRepeatCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Repeat task"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDoneTimeTextInput" />
-
     <EditText
         android:id="@+id/taskRepeatIntervalTextInput"
         android:layout_width="0dp"
@@ -70,7 +60,7 @@
         android:hint="Repeat interval in days"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/taskPointsTextInput"
-        app:layout_constraintStart_toEndOf="@+id/taskRepeatCheckBox"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskDoneTimeTextInput" />
 
     <EditText

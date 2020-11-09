@@ -40,30 +40,28 @@ override fun onStart() {
 
         var validateEmptyTextinput = false
 
-        if(taskTitleTextInput.text.trim().isEmpty()) {
+        val inputText = taskDoneTimeTextInput.text
+        val (digits, notDigits) = inputText.partition { it.isDigit() }
+        if(taskDoneTimeTextInput.text.toString().length !== 6 || notDigits.isNotEmpty()) {
             validateEmptyTextinput = true
-            Log.w("johandebug", "tasktitle $validateEmptyTextinput")
-            Toast.makeText(activity, "Please enter a title", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Enter date in YYMMDD", Toast.LENGTH_SHORT).show()
+            taskDoneTimeTextInput.text.clear()
+        }
+        if(taskDoneTimeTextInput.text.trim().isEmpty()) {
+            validateEmptyTextinput = true
+            Toast.makeText(activity, "Please enter a done by time", Toast.LENGTH_SHORT).show()
+        }
+        if(taskDoneTimeTextInput.text.trim().isEmpty()) {
+            validateEmptyTextinput = true
+            Toast.makeText(activity, "Please enter a done by time", Toast.LENGTH_SHORT).show()
         }
         if(taskCategoryTextInput.text.trim().isEmpty()) {
             validateEmptyTextinput = true
-            Log.w("johandebug", "taskcategory $validateEmptyTextinput")
             Toast.makeText(activity, "Please enter a category", Toast.LENGTH_SHORT).show()
         }
-        if(taskDoneTimeTextInput.text.trim().isEmpty()) {
+        if(taskTitleTextInput.text.trim().isEmpty()) {
             validateEmptyTextinput = true
-            Log.w("johandebug", "taskdonetime $validateEmptyTextinput")
-            Toast.makeText(activity, "Please enter a done by time", Toast.LENGTH_SHORT).show()
-        }
-        if(taskDoneTimeTextInput.text.trim().isEmpty()) {
-            validateEmptyTextinput = true
-            Log.w("johandebug", "taskdonetime $validateEmptyTextinput")
-            Toast.makeText(activity, "Please enter a done by time", Toast.LENGTH_SHORT).show()
-        }
-        if(taskDoneTimeTextInput.text.toString().length !== 6) {
-            validateEmptyTextinput = true
-            Log.w("johandebug", "taskdonetime $validateEmptyTextinput")
-            Toast.makeText(activity, "Enter date in YYMMDD", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Please enter a title", Toast.LENGTH_SHORT).show()
         }
 
         if(validateEmptyTextinput){
@@ -73,7 +71,6 @@ override fun onStart() {
                 taskTitle = taskTitleTextInput.text.toString(),
                 taskCategory = taskCategoryTextInput.text.toString(),
                 taskDoneTime = taskDoneTimeTextInput.text.toString(),
-                taskRepeat = taskRepeatCheckBox.isChecked(),
                 taskRepeatInterval = taskRepeatIntervalTextInput.text.toString(),
                 taskPoints = taskPointsTextInput.text.toString(),
                 done = false
@@ -85,10 +82,6 @@ override fun onStart() {
             taskDoneTimeTextInput.setText("")
             taskPointsTextInput.setText("")
             taskRepeatIntervalTextInput.setText("")
-            if (taskRepeatCheckBox.isChecked()) {
-                taskRepeatCheckBox.setChecked(false);
-            }
-            Log.w("johandebug", "i addtaskfrag " + todoAdapter.todolist.size.toString())
             todoAdapter.loadTodo()
         }
     }

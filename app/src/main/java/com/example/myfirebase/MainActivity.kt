@@ -20,7 +20,7 @@ data class Todothing(
     var taskTitle: String = "",
     var taskCategory: String = "",
     var taskDoneTime: String = "",
-    var taskRepeat: Boolean? = false,
+    //var taskRepeat: Boolean? = false,
     var taskRepeatInterval: String? = "",
     var taskPoints: String? = "",
     var done: Boolean = false
