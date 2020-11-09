@@ -59,9 +59,8 @@
                         val date = todolist[position].taskDoneTime
 
                         val repeatInDays = todolist[position].taskRepeatInterval!!.toLong() * 86400000
-                        val myTest = addDays(date, repeatInDays)
-                        Log.w("johandebug", "mytest "+ myTest)
-                        database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("taskDoneTime").setValue(myTest)
+                        val newDateToSave = addDays(date, repeatInDays)
+                        database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("taskDoneTime").setValue(newDateToSave)
                     }
                 }
                 loadTodo()
@@ -75,9 +74,8 @@
             val date: Date = sdf.parse(myDate)
             val millis: Long = date.getTime()
             val timeTotal = millis + repeatInDays
-
-            val testTime = convertDate(timeTotal.toString(),"yyMMdd")
-            return testTime
+            val convertedDate = convertDate(timeTotal.toString(),"yyMMdd")
+            return convertedDate
         }
 
         fun convertDate(dateInMilliseconds: String, dateFormat: String?): String? {
@@ -89,13 +87,10 @@
 
             val todoListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    // Get Post object and use the values to update the UI
-
                     var tempTodoList = mutableListOf<Todothing>()
                     for (todochild : DataSnapshot in dataSnapshot.children){
                         val todo : Todothing? = todochild.getValue<Todothing>()
                         todo!!.fbkey = todochild.key
-                        //Log.i("mindebug" , todo!!.taskTitle!!)
                         tempTodoList.add(todo!!)
                     }
                     todolist = tempTodoList
@@ -104,9 +99,7 @@
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    // Getting Post failed, log a message
                     Log.w("JOHANDEBUG", "loadPost:onCancelled", databaseError.toException())
-                    // ...
                 }
             }
                 database.child("todousers").child(auth.currentUser!!.uid).orderByChild("taskDoneTime").addListenerForSingleValueEvent(todoListener)
