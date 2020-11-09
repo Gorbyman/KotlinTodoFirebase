@@ -67,12 +67,18 @@ override fun onStart() {
         if(validateEmptyTextinput){
             mainActivity.finish()
         } else {
+            var taskPoints: String?
+            if(taskPointsTextInput.text.toString().isNotEmpty()){
+                taskPoints = taskPointsTextInput.text.toString()
+            } else {
+                taskPoints = "0"
+            }
             var thingtodo = Todothing(
                 taskTitle = taskTitleTextInput.text.toString(),
                 taskCategory = taskCategoryTextInput.text.toString(),
                 taskDoneTime = taskDoneTimeTextInput.text.toString(),
                 taskRepeatInterval = taskRepeatIntervalTextInput.text.toString(),
-                taskPoints = taskPointsTextInput.text.toString(),
+                taskPoints = taskPoints,
                 done = false
             )
             database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
@@ -83,11 +89,9 @@ override fun onStart() {
             taskPointsTextInput.setText("")
             taskRepeatIntervalTextInput.setText("")
             todoAdapter.loadTodo()
-        }
-    }
 
-    doneBtn.setOnClickListener {
-        (activity as MainActivity).goListFragment()
+            (activity as MainActivity).goListFragment()
+        }
     }
 }
 
