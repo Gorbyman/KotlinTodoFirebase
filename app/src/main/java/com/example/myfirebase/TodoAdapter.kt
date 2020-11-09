@@ -57,29 +57,11 @@
                     database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("done").setValue(true)
                     if(todolist[position].taskRepeatInterval!!.toInt() > 0){
                         val date = todolist[position].taskDoneTime
-                        /*
-                        val yearFromDate =  date!!.substring(startIndex = 0, endIndex = 2)
-                        val monthFromDate = date!!.substring(startIndex = 2, endIndex = 4)
-                        val dayFromDate = date!!.substring(startIndex = 4, endIndex = 6)
 
-                        // måste kolla vilken månad det är först
-                        Log.w("johandebug", "månnad " + monthFromDate)
-                        if(monthFromDate == "01" || monthFromDate == "03" || monthFromDate == "05" || monthFromDate == "07" || monthFromDate == "08" || monthFromDate == "10" || monthFromDate =="12"){
-                            Log.w("johandebug", "månad har 31 dagar")
-                            addDays("12")
-                        } else if(monthFromDate == "04" || monthFromDate =="06" || monthFromDate =="09" || monthFromDate=="11") {
-                            Log.w("johandebug", "månad har 30 dagar")
-                        } else {
-                            Log.w ("johandebug", "februari")
-                        }
-
-                        val newDay = dayFromDate.toInt() + todolist[position].taskRepeatInterval!!.toInt()
-                        val newDate = yearFromDate.plus(monthFromDate).plus(newDay)
-                        Log.w("johandebug", newDate.toString())
-                        // 201211
-                         */
-                        val repeatInDays = todolist[position].taskRepeatInterval!!.toInt() * 86400000
-                        addDays(date, repeatInDays)
+                        val repeatInDays = todolist[position].taskRepeatInterval!!.toLong() * 86400000
+                        val myTest = addDays(date, repeatInDays)
+                        Log.w("johandebug", "mytest "+ myTest)
+                        database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("taskDoneTime").setValue(myTest)
                     }
                 }
                 loadTodo()
@@ -87,7 +69,7 @@
 
         }
 
-        fun addDays(dateAsString: String, repeatInDays: Int) {
+        fun addDays(dateAsString: String, repeatInDays: Long): String? {
             val myDate = dateAsString
             val sdf = SimpleDateFormat("yyMMdd")
             val date: Date = sdf.parse(myDate)
@@ -95,7 +77,7 @@
             val timeTotal = millis + repeatInDays
 
             val testTime = convertDate(timeTotal.toString(),"yyMMdd")
-            Log.w("johandebug", "i adddays nu " + "${testTime}")
+            return testTime
         }
 
         fun convertDate(dateInMilliseconds: String, dateFormat: String?): String? {
