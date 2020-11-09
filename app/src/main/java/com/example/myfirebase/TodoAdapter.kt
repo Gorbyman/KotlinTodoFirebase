@@ -38,6 +38,8 @@
         override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
             holder.todoText.text = todolist[position].taskTitle
             holder.todoPoints.text = todolist[position].taskPoints
+            holder.todoCategory.text = todolist[position].taskCategory
+            holder.todoDoneByTime.text = todolist[position].taskDoneTime
 
             if(todolist[position].done == true ){
                 holder.todoDone.setBackgroundColor(Color.GREEN)
@@ -51,10 +53,36 @@
                     database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("done").setValue(false)
                 } else {
                     database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("done").setValue(true)
+                    if(todolist[position].taskRepeatInterval!!.toInt() > 0){
+                        val date = todolist[position].taskDoneTime.toString()
+                        val yearFromDate =  date!!.substring(startIndex = 0, endIndex = 2)
+                        val monthFromDate = date!!.substring(startIndex = 2, endIndex = 4)
+                        val dayFromDate = date!!.substring(startIndex = 4, endIndex = 6)
+
+                        // måste kolla vilken månad det är först
+                        Log.w("johandebug", "månnad " + monthFromDate)
+                        if(monthFromDate == "01" || monthFromDate == "03" || monthFromDate == "05" || monthFromDate == "07" || monthFromDate == "08" || monthFromDate == "10" || monthFromDate =="12"){
+                            Log.w("johandebug", "månad har 31 dagar")
+                            addDays("12")
+                        } else if(monthFromDate == "04" || monthFromDate =="06" || monthFromDate =="09" || monthFromDate=="11") {
+                            Log.w("johandebug", "månad har 30 dagar")
+                        } else {
+                            Log.w ("johandebug", "februari")
+                        }
+
+                        val newDay = dayFromDate.toInt() + todolist[position].taskRepeatInterval!!.toInt()
+                        val newDate = yearFromDate.plus(monthFromDate).plus(newDay)
+                        Log.w("johandebug", newDate.toString())
+                        // 201211
+                    }
                 }
                 loadTodo()
             }
 
+        }
+
+        fun addDays(dateAsString: String) {
+            Log.w("johandebug", dateAsString)
         }
 
         fun loadTodo(){
@@ -73,8 +101,6 @@
                     }
                     todolist = tempTodoList
                     notifyDataSetChanged()
-                    Log.w("johandebug", "antal på listan " + todolist.size.toString())
-                    Log.w("johandebug", todolist.toString())
 
                 }
 
@@ -84,7 +110,7 @@
                     // ...
                 }
             }
-                database.child("todousers").child(auth.currentUser!!.uid).orderByChild("done").addListenerForSingleValueEvent(todoListener)
+                database.child("todousers").child(auth.currentUser!!.uid).orderByChild("taskDoneTime").addListenerForSingleValueEvent(todoListener)
 
         }
 
@@ -95,6 +121,8 @@
         var todoText = view.todoTV
         var todoPoints = view.pointsTV
         var todoDone = view.todoDoneCL
+        var todoCategory = view.categoryTV
+        var todoDoneByTime = view.doneByTimeTV
 
     }
 
