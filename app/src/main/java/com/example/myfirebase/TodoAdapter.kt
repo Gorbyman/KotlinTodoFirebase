@@ -1,11 +1,11 @@
     package com.example.myfirebase
 
     import android.graphics.Color
+    import android.text.format.DateFormat
     import android.util.Log
     import android.view.LayoutInflater
     import android.view.View
     import android.view.ViewGroup
-    import androidx.lifecycle.MutableLiveData
     import androidx.recyclerview.widget.RecyclerView
     import com.google.firebase.auth.FirebaseAuth
     import com.google.firebase.auth.ktx.auth
@@ -17,6 +17,8 @@
     import com.google.firebase.database.ktx.getValue
     import com.google.firebase.ktx.Firebase
     import kotlinx.android.synthetic.main.todo_item.view.*
+    import java.text.SimpleDateFormat
+    import java.util.*
 
     class TodoAdapter() : RecyclerView.Adapter<TodoViewHolder>() {
 
@@ -54,7 +56,8 @@
                 } else {
                     database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("done").setValue(true)
                     if(todolist[position].taskRepeatInterval!!.toInt() > 0){
-                        val date = todolist[position].taskDoneTime.toString()
+                        val date = todolist[position].taskDoneTime
+                        /*
                         val yearFromDate =  date!!.substring(startIndex = 0, endIndex = 2)
                         val monthFromDate = date!!.substring(startIndex = 2, endIndex = 4)
                         val dayFromDate = date!!.substring(startIndex = 4, endIndex = 6)
@@ -74,6 +77,9 @@
                         val newDate = yearFromDate.plus(monthFromDate).plus(newDay)
                         Log.w("johandebug", newDate.toString())
                         // 201211
+                         */
+                        val repeatInDays = todolist[position].taskRepeatInterval!!.toInt() * 86400000
+                        addDays(date, repeatInDays)
                     }
                 }
                 loadTodo()
@@ -81,8 +87,19 @@
 
         }
 
-        fun addDays(dateAsString: String) {
-            Log.w("johandebug", dateAsString)
+        fun addDays(dateAsString: String, repeatInDays: Int) {
+            val myDate = dateAsString
+            val sdf = SimpleDateFormat("yyMMdd")
+            val date: Date = sdf.parse(myDate)
+            val millis: Long = date.getTime()
+            val timeTotal = millis + repeatInDays
+
+            val testTime = convertDate(timeTotal.toString(),"yyMMdd")
+            Log.w("johandebug", "i adddays nu " + "${testTime}")
+        }
+
+        fun convertDate(dateInMilliseconds: String, dateFormat: String?): String? {
+            return DateFormat.format(dateFormat, dateInMilliseconds.toLong()).toString()
         }
 
         fun loadTodo(){
