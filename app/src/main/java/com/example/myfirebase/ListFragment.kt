@@ -33,7 +33,9 @@ class ListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         taskRecView.layoutManager = LinearLayoutManager(context)
         taskRecView.adapter = todoAdapter
-        todoAdapter.loadTodo()
+        if(todoAdapter.todolist.isNotEmpty()){
+            todoAdapter.loadTodo()
+        }
     }
 
     override fun onStart() {
