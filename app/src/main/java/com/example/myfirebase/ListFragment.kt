@@ -23,7 +23,6 @@ class ListFragment : Fragment() {
 
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
-        Log.w("johandebug", todoAdapter.todolist.toString())
     }
 
     override fun onCreateView(
