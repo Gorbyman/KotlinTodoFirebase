@@ -94,7 +94,7 @@ override fun onStart() {
         }
     }
 
-    doneBtn.setOnClickListener(){
+    doneBtn.setOnClickListener{
         (activity as MainActivity).goListFragment()
     }
 }
