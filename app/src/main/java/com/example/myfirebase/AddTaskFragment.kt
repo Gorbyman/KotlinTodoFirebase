@@ -39,9 +39,9 @@ override fun onStart() {
     addTaskBtn.setOnClickListener {
 
         var validateEmptyTextinput = false
-
         val inputText = taskDoneTimeTextInput.text
         val (digits, notDigits) = inputText.partition { it.isDigit() }
+
         if(taskDoneTimeTextInput.text.toString().length !== 6 || notDigits.isNotEmpty()) {
             validateEmptyTextinput = true
             Toast.makeText(activity, "Enter date in YYMMDD", Toast.LENGTH_SHORT).show()
@@ -92,6 +92,10 @@ override fun onStart() {
 
             (activity as MainActivity).goListFragment()
         }
+    }
+
+    doneBtn.setOnClickListener(){
+        (activity as MainActivity).goListFragment()
     }
 }
 
