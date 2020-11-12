@@ -25,7 +25,6 @@
         var database: DatabaseReference = Firebase.database.reference
         var auth: FirebaseAuth = Firebase.auth
 
-        // orginalkod
         var todolist = mutableListOf<Todothing>()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
@@ -103,9 +102,7 @@
                 }
             }
                 database.child("todousers").child(auth.currentUser!!.uid).orderByChild("taskDoneTime").addListenerForSingleValueEvent(todoListener)
-
         }
-
     }
 
     class TodoViewHolder (view: View) : RecyclerView.ViewHolder(view) {
