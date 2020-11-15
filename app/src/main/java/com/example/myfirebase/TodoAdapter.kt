@@ -9,10 +9,7 @@
     import androidx.recyclerview.widget.RecyclerView
     import com.google.firebase.auth.FirebaseAuth
     import com.google.firebase.auth.ktx.auth
-    import com.google.firebase.database.DataSnapshot
-    import com.google.firebase.database.DatabaseError
-    import com.google.firebase.database.DatabaseReference
-    import com.google.firebase.database.ValueEventListener
+    import com.google.firebase.database.*
     import com.google.firebase.database.ktx.database
     import com.google.firebase.database.ktx.getValue
     import com.google.firebase.ktx.Firebase
@@ -106,7 +103,11 @@
         }
 
         fun loadTotalPoints(){
-            /*val pointsListener = object : ValueEventListener {
+
+            val databaseReference = FirebaseDatabase.getInstance().getReference("totalPoints")
+            val totalPointsRef = databaseReference.child(auth.currentUser!!.uid).orderByChild("totalPoints")
+
+            val pointsListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var tempPoints = mutableListOf<TotalPoints>()
                     for (pointsChild : DataSnapshot in dataSnapshot.children){
@@ -121,8 +122,8 @@
                     Log.w("JOHANDEBUG", "loadPost:onCancelled", databaseError.toException())
                 }
             }
-            database.child("totalPoints").child(auth.currentUser!!.uid).addListenerForSingleValueEvent(pointsListener)
-*/
+            totalPointsRef.addListenerForSingleValueEvent(pointsListener)
+
             }
 
     }
