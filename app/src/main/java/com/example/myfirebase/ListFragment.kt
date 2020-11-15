@@ -47,6 +47,7 @@ class ListFragment : Fragment() {
         }
         if(auth.currentUser != null){
             todoAdapter.loadTodo()
+           // todoAdapter.loadTotalPoints()
         }
     }
 

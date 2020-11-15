@@ -26,6 +26,7 @@
         var auth: FirebaseAuth = Firebase.auth
 
         var todolist = mutableListOf<Todothing>()
+        var pointslist = mutableListOf<TotalPoints>()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
             val vh = TodoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.todo_item, parent, false))
@@ -101,8 +102,29 @@
                     Log.w("JOHANDEBUG", "loadPost:onCancelled", databaseError.toException())
                 }
             }
-                database.child("todousers").child(auth.currentUser!!.uid).orderByChild("taskDoneTime").addListenerForSingleValueEvent(todoListener)
+            database.child("todousers").child(auth.currentUser!!.uid).orderByChild("taskDoneTime").addListenerForSingleValueEvent(todoListener)
         }
+
+        fun loadTotalPoints(){
+            /*val pointsListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var tempPoints = mutableListOf<TotalPoints>()
+                    for (pointsChild : DataSnapshot in dataSnapshot.children){
+                        val points : TotalPoints? = pointsChild.getValue<TotalPoints>()
+                        tempPoints.add(points!!)
+                    }
+                    pointslist = tempPoints
+                    Log.w("johand", pointslist.toString())
+                    notifyDataSetChanged()
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.w("JOHANDEBUG", "loadPost:onCancelled", databaseError.toException())
+                }
+            }
+            database.child("totalPoints").child(auth.currentUser!!.uid).addListenerForSingleValueEvent(pointsListener)
+*/
+            }
+
     }
 
     class TodoViewHolder (view: View) : RecyclerView.ViewHolder(view) {

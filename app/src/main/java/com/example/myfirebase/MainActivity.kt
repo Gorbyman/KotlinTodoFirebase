@@ -28,6 +28,11 @@ data class Todothing(
     var done: Boolean = false
 )
 
+@IgnoreExtraProperties
+data class TotalPoints(
+    var totalPoints: String? = ""
+)
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
