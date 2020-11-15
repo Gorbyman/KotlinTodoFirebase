@@ -42,8 +42,6 @@ override fun onStart() {
 
     addTaskBtn.setOnClickListener {
 
-        firebaseAnalytics.logEvent("add_todo", null)
-
         var validateEmptyTextinput = false
         val inputText = taskDoneTimeTextInput.text
         val (digits, notDigits) = inputText.partition { it.isDigit() }
@@ -88,6 +86,8 @@ override fun onStart() {
                 done = false
             )
             database.child("todousers").child(auth.currentUser!!.uid).push().setValue(thingtodo)
+
+            firebaseAnalytics.logEvent("add_todo", null)
 
             taskTitleTextInput.setText("")
             taskCategoryTextInput.setText("")
