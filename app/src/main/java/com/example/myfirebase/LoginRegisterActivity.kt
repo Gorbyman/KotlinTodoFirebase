@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -14,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_login_register.*
 class LoginRegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +24,7 @@ class LoginRegisterActivity : AppCompatActivity() {
 
         var database: DatabaseReference = Firebase.database.reference
         auth = Firebase.auth
+        firebaseAnalytics = Firebase.analytics
 
         loginRegisterBtn.setOnClickListener {
             val emailInput: String = loginEmailET.text.toString()
@@ -40,6 +44,7 @@ class LoginRegisterActivity : AppCompatActivity() {
                             Log.d("mindebug", "createUserWithEmail:success")
                             database.child("todoapp").child("users").push()
                                 .setValue(auth.currentUser!!.uid)
+                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, null)
                             finish()
                         } else {
                             // If sign in fails, display a message to the user.
@@ -73,6 +78,7 @@ class LoginRegisterActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("mindeug", "signInWithEmail:success")
+                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, null)
                             finish()
                         } else {
                             // If sign in fails, display a message to the user.
