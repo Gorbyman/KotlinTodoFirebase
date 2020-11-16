@@ -13,6 +13,7 @@
     import com.google.firebase.database.ktx.database
     import com.google.firebase.database.ktx.getValue
     import com.google.firebase.ktx.Firebase
+    import kotlinx.android.synthetic.main.fragment_list.*
     import kotlinx.android.synthetic.main.todo_item.view.*
     import java.text.SimpleDateFormat
     import java.util.*
@@ -23,7 +24,8 @@
         var auth: FirebaseAuth = Firebase.auth
 
         var todolist = mutableListOf<Todothing>()
-        var totalPoints = ""
+        var taskPoints = "0"
+
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
             val vh = TodoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.todo_item, parent, false))
@@ -58,6 +60,8 @@
                         val repeatInDays = todolist[position].taskRepeatInterval!!.toLong() * 86400000
                         val newDateToSave = addDays(date, repeatInDays)
                         database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("taskDoneTime").setValue(newDateToSave)
+
+                        taskPoints = todolist[position].taskPoints!!
                     }
                 }
                 loadTodo()
@@ -92,7 +96,6 @@
                     }
                     todolist = tempTodoList
                     notifyDataSetChanged()
-
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -101,28 +104,6 @@
             }
             database.child("todousers").child(auth.currentUser!!.uid).orderByChild("taskDoneTime").addListenerForSingleValueEvent(todoListener)
         }
-
-        fun loadTotalPoints(){
-
-            var totalPointsRef = database.child("totalPoints").child(auth.currentUser!!.uid).orderByChild("totalPoints")
-            val pointsListener = object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var tempPoints = ""
-
-                    for (pointschild : DataSnapshot in dataSnapshot.children){
-                        tempPoints = pointschild.value.toString()
-                    }
-                    totalPoints = tempPoints
-                    Log.w("johandebug", totalPoints)
-                    notifyDataSetChanged()
-                }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    Log.w("JOHANDEBUG", "loadPost:onCancelled", databaseError.toException())
-                }
-            }
-            totalPointsRef.addListenerForSingleValueEvent(pointsListener)
-
-            }
 
     }
 
