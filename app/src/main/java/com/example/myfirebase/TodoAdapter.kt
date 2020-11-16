@@ -23,7 +23,7 @@
         var auth: FirebaseAuth = Firebase.auth
 
         var todolist = mutableListOf<Todothing>()
-        var pointslist = mutableListOf<TotalPoints>()
+        var totalPoints = ""
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
             val vh = TodoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.todo_item, parent, false))
@@ -104,18 +104,16 @@
 
         fun loadTotalPoints(){
 
-            val databaseReference = FirebaseDatabase.getInstance().getReference("totalPoints")
-            val totalPointsRef = databaseReference.child(auth.currentUser!!.uid).orderByChild("totalPoints")
-
+            var totalPointsRef = database.child("totalPoints").child(auth.currentUser!!.uid).orderByChild("totalPoints")
             val pointsListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var tempPoints = mutableListOf<TotalPoints>()
-                    for (pointsChild : DataSnapshot in dataSnapshot.children){
-                        val points : TotalPoints? = pointsChild.getValue<TotalPoints>()
-                        tempPoints.add(points!!)
+                    var tempPoints = ""
+
+                    for (pointschild : DataSnapshot in dataSnapshot.children){
+                        tempPoints = pointschild.value.toString()
                     }
-                    pointslist = tempPoints
-                    Log.w("johand", pointslist.toString())
+                    totalPoints = tempPoints
+                    Log.w("johandebug", totalPoints)
                     notifyDataSetChanged()
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
