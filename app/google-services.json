@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1074021321638:android:b731e2c69a32dd83721d67",
         "android_client_info": {
-          "package_name": "com.example.myfirebase"
+          "package_name": "com.deluxe.todolist"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "1074021321638-ad930i4k018k615akvk6v7uia19bu7a2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.myfirebase",
+            "package_name": "com.deluxe.todolist",
             "certificate_hash": "b203e2d1a033e1c2d097573983c1c586a62f0451"
           }
         },

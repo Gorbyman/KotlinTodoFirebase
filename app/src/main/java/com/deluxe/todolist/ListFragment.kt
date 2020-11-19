@@ -1,4 +1,4 @@
-package com.example.myfirebase
+package com.deluxe.todolist
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.deluxe.todolist.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -21,8 +22,7 @@ class ListFragment : Fragment() {
 
     var todoAdapter = TodoAdapter()
     private lateinit var auth: FirebaseAuth
-    var database: DatabaseReference = Firebase.database.reference
-    var totalPoints = "0"
+    // var database: DatabaseReference = Firebase.database.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -49,34 +49,20 @@ class ListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         toAddTaskBtn.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, AddTaskFragment()).commit()
+            activity!!.supportFragmentManager.beginTransaction().replace(
+                R.id.mainFragmentHolder,
+                AddTaskFragment()
+            ).commit()
         }
         if(auth.currentUser != null){
             todoAdapter.loadTodo()
-
-            //loadTotalPoints()
         }
     }
 
-    fun loadTotalPoints(){
-        var totalPointsRef = database.child("totalPoints").child(auth.currentUser!!.uid).orderByChild("totalPoints")
-        val pointsListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var tempPoints = ""
-
-                for (pointschild : DataSnapshot in dataSnapshot.children){
-                    tempPoints = pointschild.value.toString()
-                }
-                totalPoints = tempPoints
-
-                //totalPointsTV.text = totalPoints
-
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w("JOHANDEBUG", "loadPost:onCancelled", databaseError.toException())
-            }
+    fun getPoints(totalPoints: String){
+        if(totalPointsTV != null) {
+            totalPointsTV.text = totalPoints
         }
-        totalPointsRef.addListenerForSingleValueEvent(pointsListener)
     }
 
 

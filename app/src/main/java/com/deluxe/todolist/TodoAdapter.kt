@@ -1,4 +1,4 @@
-    package com.example.myfirebase
+    package com.deluxe.todolist
 
     import android.graphics.Color
     import android.text.format.DateFormat
@@ -7,13 +7,13 @@
     import android.view.View
     import android.view.ViewGroup
     import androidx.recyclerview.widget.RecyclerView
+    import com.deluxe.todolist.R
     import com.google.firebase.auth.FirebaseAuth
     import com.google.firebase.auth.ktx.auth
     import com.google.firebase.database.*
     import com.google.firebase.database.ktx.database
     import com.google.firebase.database.ktx.getValue
     import com.google.firebase.ktx.Firebase
-    import kotlinx.android.synthetic.main.fragment_list.*
     import kotlinx.android.synthetic.main.todo_item.view.*
     import java.text.SimpleDateFormat
     import java.util.*
@@ -25,10 +25,16 @@
 
         var todolist = mutableListOf<Todothing>()
         var taskPoints = "0"
-
+        var totalPoints = "0"
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-            val vh = TodoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.todo_item, parent, false))
+            val vh = TodoViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.todo_item,
+                    parent,
+                    false
+                )
+            )
             return vh
         }
 
@@ -62,6 +68,7 @@
                         database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("taskDoneTime").setValue(newDateToSave)
 
                         taskPoints = todolist[position].taskPoints!!
+
                     }
                 }
                 loadTodo()
@@ -103,6 +110,30 @@
                 }
             }
             database.child("todousers").child(auth.currentUser!!.uid).orderByChild("taskDoneTime").addListenerForSingleValueEvent(todoListener)
+            loadTotalPoints()
+        }
+
+        fun loadTotalPoints(){
+            var totalPointsRef = database.child("totalPoints").child(auth.currentUser!!.uid).orderByChild("totalPoints")
+            val pointsListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var tempPoints = ""
+
+                    for (pointschild : DataSnapshot in dataSnapshot.children){
+                        tempPoints = pointschild.value.toString()
+                    }
+                    totalPoints = tempPoints
+                    notifyDataSetChanged()
+                    var addedPoints = totalPoints.toInt() + taskPoints.toInt()
+                    database.child("totalPoints").child(auth.currentUser!!.uid).child("totalPoints").setValue(addedPoints)
+                    ListFragment().getPoints(addedPoints.toString())
+
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.w("JOHANDEBUG", "loadPost:onCancelled", databaseError.toException())
+                }
+            }
+            totalPointsRef.addListenerForSingleValueEvent(pointsListener)
         }
 
     }

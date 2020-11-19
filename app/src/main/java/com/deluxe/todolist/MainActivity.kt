@@ -1,10 +1,9 @@
-package com.example.myfirebase
+package com.deluxe.todolist
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.deluxe.todolist.R
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -12,10 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_add_task.*
 
 @IgnoreExtraProperties
 data class Todothing(
@@ -46,7 +43,10 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null)
 
-        supportFragmentManager.beginTransaction().add(R.id.mainFragmentHolder, ListFragment()).commit()
+        supportFragmentManager.beginTransaction().add(
+            R.id.mainFragmentHolder,
+            ListFragment()
+        ).commit()
 
         logoutBtn.setOnClickListener {
             auth.signOut()
@@ -77,7 +77,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goListFragment(){
-        supportFragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, ListFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(
+            R.id.mainFragmentHolder,
+            ListFragment()
+        ).commit()
     }
 
 }
