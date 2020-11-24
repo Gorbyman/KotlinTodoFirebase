@@ -3,6 +3,7 @@ package com.deluxe.todolist
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.deluxe.todolist.R
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -13,6 +14,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_list.*
 
 @IgnoreExtraProperties
 data class Todothing(
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     var todoadapter = TodoAdapter()
+    var pointsadapter = PointsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "Main")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
         }
+
     }
 
     override fun onStart() {
@@ -73,6 +77,7 @@ class MainActivity : AppCompatActivity() {
               startActivity(intent)
         } else {
             todoadapter.loadTodo()
+            pointsadapter.loadTotalPoints()
         }
     }
 
@@ -82,5 +87,6 @@ class MainActivity : AppCompatActivity() {
             ListFragment()
         ).commit()
     }
+
 
 }

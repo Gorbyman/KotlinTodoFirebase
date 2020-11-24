@@ -14,7 +14,10 @@
     import com.google.firebase.database.ktx.database
     import com.google.firebase.database.ktx.getValue
     import com.google.firebase.ktx.Firebase
+    import kotlinx.android.synthetic.main.activity_main.*
+    import kotlinx.android.synthetic.main.activity_main.view.*
     import kotlinx.android.synthetic.main.todo_item.view.*
+    import java.security.DomainCombiner
     import java.text.SimpleDateFormat
     import java.util.*
 
@@ -45,7 +48,7 @@
         override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
             holder.todoText.text = todolist[position].taskTitle
             holder.todoPoints.text = todolist[position].taskPoints
-            holder.todoCategory.text = todolist[position].taskCategory
+            holder.todoCategory.text = "/" + todolist[position].taskCategory
             holder.todoDoneByTime.text = todolist[position].taskDoneTime
 
             if(todolist[position].done == true ){
@@ -68,7 +71,6 @@
                         database.child("todousers").child(auth.currentUser!!.uid).child(todolist[position].fbkey!!).child("taskDoneTime").setValue(newDateToSave)
 
                         taskPoints = todolist[position].taskPoints!!
-
                     }
                 }
                 loadTodo()
@@ -114,6 +116,7 @@
         }
 
         fun loadTotalPoints(){
+
             var totalPointsRef = database.child("totalPoints").child(auth.currentUser!!.uid).orderByChild("totalPoints")
             val pointsListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -122,11 +125,15 @@
                     for (pointschild : DataSnapshot in dataSnapshot.children){
                         tempPoints = pointschild.value.toString()
                     }
-                    totalPoints = tempPoints
-                    notifyDataSetChanged()
-                    var addedPoints = totalPoints.toInt() + taskPoints.toInt()
+                    //notifyDataSetChanged()
+                    var addedPoints = tempPoints.toInt() + taskPoints.toInt()
+                    totalPoints = addedPoints.toString()
+                    taskPoints = "0"
                     database.child("totalPoints").child(auth.currentUser!!.uid).child("totalPoints").setValue(addedPoints)
-                    ListFragment().getPoints(addedPoints.toString())
+                    //Log.w("johandebug", addedPoints.toString())
+
+                    ListFragment().tempPoints = totalPoints
+                    //MainActivity().totalPointsTV.text = addedPoints.toString()
 
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -134,6 +141,7 @@
                 }
             }
             totalPointsRef.addListenerForSingleValueEvent(pointsListener)
+
         }
 
     }
@@ -147,4 +155,3 @@
         var todoDoneByTime = view.doneByTimeTV
 
     }
-
