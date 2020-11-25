@@ -14,8 +14,6 @@
     import com.google.firebase.database.ktx.database
     import com.google.firebase.database.ktx.getValue
     import com.google.firebase.ktx.Firebase
-    import kotlinx.android.synthetic.main.activity_main.*
-    import kotlinx.android.synthetic.main.activity_main.view.*
     import kotlinx.android.synthetic.main.todo_item.view.*
     import java.security.DomainCombiner
     import java.text.SimpleDateFormat
@@ -125,16 +123,10 @@
                     for (pointschild : DataSnapshot in dataSnapshot.children){
                         tempPoints = pointschild.value.toString()
                     }
-                    //notifyDataSetChanged()
                     var addedPoints = tempPoints.toInt() + taskPoints.toInt()
                     totalPoints = addedPoints.toString()
                     taskPoints = "0"
                     database.child("totalPoints").child(auth.currentUser!!.uid).child("totalPoints").setValue(addedPoints)
-                    //Log.w("johandebug", addedPoints.toString())
-
-                    ListFragment().tempPoints = totalPoints
-                    //MainActivity().totalPointsTV.text = addedPoints.toString()
-
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
                     Log.w("JOHANDEBUG", "loadPost:onCancelled", databaseError.toException())

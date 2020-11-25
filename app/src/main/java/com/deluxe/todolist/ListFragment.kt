@@ -22,9 +22,7 @@ class ListFragment : Fragment() {
 
     var todoAdapter = TodoAdapter()
     var pointsAdapter = PointsAdapter()
-    var tempPoints = "0"
     private lateinit var auth: FirebaseAuth
-    // var database: DatabaseReference = Firebase.database.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
